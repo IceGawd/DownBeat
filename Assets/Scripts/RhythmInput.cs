@@ -6,7 +6,7 @@ public class RhythmInput : MonoBehaviour {
 	[SerializeField] public RhythmManager rhythm;
 
 	[Header("Timing")]
-	[SerializeField] public double toleranceFrames = 3.0;	// 0 = Perfect, 1 = Great, 2 = Good, 3 = Ok
+	[SerializeField] public double toleranceFrames = 4.0;	// 0-1 = Perfect, 2 = Great, 3 = Good, 4 = Ok
 	[SerializeField] public double lockoutFrames = 20.0;
 	[SerializeField] public double FPS = 60.0;
 

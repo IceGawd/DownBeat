@@ -510,7 +510,7 @@ MonoBehaviour:
   musicSource: {fileID: 1255515129}
   song: {fileID: 8300000, guid: fad52ed013e08eb4390842ba19843f22, type: 3}
   bpm: 57
-  delaySec: 0.18
+  delaySec: 0.19
   startDelay: 1
   songStartDspTime: 0
   isPlaying: 0
@@ -527,7 +527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RhythmInput
   rhythm: {fileID: 1255515131}
-  toleranceFrames: 3
+  toleranceFrames: 4
   lockoutFrames: 20
   FPS: 60
   moveLockoutUntil: 0
