@@ -375,6 +375,7 @@ GameObject:
   - component: {fileID: 1255515130}
   - component: {fileID: 1255515129}
   - component: {fileID: 1255515131}
+  - component: {fileID: 1255515132}
   m_Layer: 0
   m_Name: Audio Source
   m_TagString: Untagged
@@ -508,10 +509,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   musicSource: {fileID: 1255515129}
   song: {fileID: 8300000, guid: fad52ed013e08eb4390842ba19843f22, type: 3}
-  bpm: 120
+  bpm: 57
+  delaySec: 0.18
   startDelay: 1
   songStartDspTime: 0
   isPlaying: 0
+--- !u!114 &1255515132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255515128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e687c217a6c6d44c8406a706187d797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RhythmInput
+  rhythm: {fileID: 1255515131}
+  toleranceFrames: 3
+  lockoutFrames: 20
+  FPS: 60
+  moveLockoutUntil: 0
+  zLockoutUntil: 0
+  xLockoutUntil: 0
+  cLockoutUntil: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -4,7 +4,8 @@ public class RhythmManager : MonoBehaviour {
 	[Header("Song")]
 	[SerializeField] public AudioSource musicSource;
 	[SerializeField] public AudioClip song;
-	[SerializeField] public double bpm = 67.89;
+	[SerializeField] public double bpm = 60;
+	[SerializeField] public double delaySec = 0.2;
 
 	[Header("Scheduling")]
 	[SerializeField] public double startDelay = 1.0;
@@ -12,10 +13,10 @@ public class RhythmManager : MonoBehaviour {
 	public double songStartDspTime;
 	public bool isPlaying;
 
-	public double BeatDuration => 60.0 / bpm;
-	public double SubdivisionDuration => BeatDuration / 12;
-	public double SongTime => isPlaying ? AudioSettings.dspTime - songStartDspTime : 0.0;
-	public int CurrentBeat => isPlaying ? Mathf.FloorToInt((float)(SongTime / BeatDuration)) : -1;
+	public double beatDuration => 60.0 / bpm;
+	public double subdivisionDuration => beatDuration / 12;
+	public double songTime => isPlaying ? AudioSettings.dspTime - songStartDspTime : 0.0;
+	public int currentBeat => isPlaying ? Mathf.FloorToInt((float)(songTime / beatDuration)) : -1;
 
 	public void Awake() {
 		musicSource = GetComponent<AudioSource>();
@@ -35,11 +36,11 @@ public class RhythmManager : MonoBehaviour {
 	}
 
 	public double getBeatTime(int beatIndex) {
-		return songStartDspTime + beatIndex * BeatDuration;
+		return songStartDspTime + beatIndex * beatDuration;
 	}
 
 	public double getSubdivisionTime(int subdivisionIndex) {
-		return songStartDspTime + subdivisionIndex * SubdivisionDuration;
+		return songStartDspTime + subdivisionIndex * subdivisionDuration;
 	}
 
 	public bool isBeatDue(int beatIndex) {
