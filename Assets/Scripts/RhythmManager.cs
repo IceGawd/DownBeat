@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class RhythmManager : MonoBehaviour {
@@ -17,6 +18,9 @@ public class RhythmManager : MonoBehaviour {
 	public double subdivisionDuration => beatDuration / 12;
 	public double songTime => isPlaying ? AudioSettings.dspTime - songStartDspTime : 0.0;
 	public int currentBeat => isPlaying ? Mathf.FloorToInt((float)(songTime / beatDuration)) : -1;
+	public event System.Action<int, double> OnSubdivision;
+
+	private Coroutine scheduler;
 
 	public void Awake() {
 		musicSource = GetComponent<AudioSource>();
@@ -45,5 +49,31 @@ public class RhythmManager : MonoBehaviour {
 
 	public bool isBeatDue(int beatIndex) {
 		return isPlaying && AudioSettings.dspTime >= getBeatTime(beatIndex);
+	}
+
+	public void Start() {
+		StartCoroutine(SubdivisionScheduler());
+	}
+
+	public IEnumerator SubdivisionScheduler() {
+		int index = 0;
+
+		while (true) {
+			if (!isPlaying) {
+				yield return null;
+				continue;
+			}
+
+			double targetTime = songStartDspTime + index * subdivisionDuration;
+			double remaining = targetTime - AudioSettings.dspTime;
+
+			if (remaining > 0) {
+				yield return new WaitForSecondsRealtime((float) remaining);
+				continue;
+			}
+
+			OnSubdivision?.Invoke(index, targetTime);
+			index++;
+		}
 	}
 }
