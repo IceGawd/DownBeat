@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -22,11 +23,22 @@ public class RhythmManager : MonoBehaviour {
 
 	private Coroutine scheduler;
 
+	private int[] beatClock = new int[5];
 	public void Awake() {
 		musicSource = GetComponent<AudioSource>();
 		musicSource.playOnAwake = false;
 		musicSource.clip = song;
 		startSong();
+	}
+
+	public void Update()
+	{
+		int currentSubDivision = Mathf.FloorToInt((float)(songTime / subdivisionDuration));
+		beatClock[0] = currentBeat;
+		beatClock[1] = currentSubDivision % 12;
+		beatClock[2] = currentSubDivision % 6;
+		beatClock[3] = currentSubDivision % 4;
+		beatClock[4] = currentSubDivision % 3;
 	}
 
 	public void startSong() {
@@ -75,5 +87,9 @@ public class RhythmManager : MonoBehaviour {
 			onSubdivision?.Invoke(index, targetTime);
 			index++;
 		}
+	}
+
+	public int[] getBeatClock() {
+		return beatClock;
 	}
 }

@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 10f;
     public float moveDist = 1;
+
     public Transform movePoint;
     void Start()
     {
@@ -15,15 +16,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        attemptMove();
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+        if( transform.GetChild(0).GetComponent<SpriteRenderer>().color != Color.white)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().color += new Color(0f, 0.4f, 0.4f, 0f) * Time.deltaTime;
+        }
         
     }
 
 
-    private void attemptMove()
+    public void attemptMove()
     {
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
-
         if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
         {
             if(Math.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
@@ -35,5 +38,10 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+    }
+
+    public void attepmtParry()
+    {
+        transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f, 1f);
     }
 }

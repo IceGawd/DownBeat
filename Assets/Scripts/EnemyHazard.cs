@@ -28,10 +28,10 @@ public class EnemyHazard : Hazard {
 
 		// Move along the axis with the greater distance.
 		if (System.Math.Abs(dx) >= System.Math.Abs(dy)) {
-			position.Move(System.Math.Sign(dx), 0);
+			position.move(System.Math.Sign(dx), 0);
 		}
 		else {
-			position.Move(0, System.Math.Sign(dy));
+			position.move(0, System.Math.Sign(dy));
 		}
 	}
 }

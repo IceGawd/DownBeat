@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class RhythmInput : MonoBehaviour {
 	[Header("References")]
 	[SerializeField] public RhythmManager rhythm;
+	[SerializeField] public PlayerController controller;
 
 	[Header("Timing")]
 	[SerializeField] public double toleranceFrames = 4.0;	// 0-1 = Perfect, 2 = Great, 3 = Good, 4 = Ok
@@ -18,7 +19,10 @@ public class RhythmInput : MonoBehaviour {
 	public double zLockoutUntil;
 	public double xLockoutUntil;
 	public double cLockoutUntil;
-
+	public int parryRefresh;
+	private int[] beatClock;
+	private int parryCD;
+	private int lastBeat;
 	public void Awake() {
 		if (rhythm == null)
 			rhythm = GetComponent<RhythmManager>();
@@ -28,16 +32,63 @@ public class RhythmInput : MonoBehaviour {
 		if (rhythm == null || !rhythm.isPlaying)
 			return;
 
-		double now = AudioSettings.dspTime;
+		// if (controller == null)
+		// 	Debug.Log("Controller not detected");
 
-		// Movement - Half Note
+		double now = AudioSettings.dspTime;
+		
+		beatClock = rhythm.getBeatClock();
+
+
+		// WASD / Arrows : Movement - Half Note
 		if (anyMovementKeyPressed()) {
-			checkInput("Movement", now, 12, ref moveLockoutUntil);
+			if(checkInput("Movement", now, 12, ref moveLockoutUntil))
+			{
+				Debug.Log("attempting movement");
+				controller.attemptMove();
+			}
+			// if(beatClock[1] == 0)
+			// {
+			// 	Debug.Log("attempting movement");
+			// 	controller.attemptMove();
+			// }
+
 		}
 
-		// Z - Quarter Note
+		// Parry: Z - Quarter Note
+		if (parryCD > 0)
+		{
+			if(beatClock[0] > lastBeat)
+			{
+				parryCD--;
+				Debug.Log("Parry coolDown: " + parryCD);
+			}
+		}
+		
 		if (Keyboard.current.zKey.wasPressedThisFrame) {
-			checkInput("Z", now, 6, ref zLockoutUntil);
+			
+			if(parryCD != 0)
+			{
+				Debug.Log("Parry on cooldown");
+			}
+			else
+			{
+				if(checkInput("Z", now, 6, ref zLockoutUntil))
+				{
+					Debug.Log("attempting parry");
+					controller.attepmtParry();
+					parryCD = parryRefresh;
+				}
+				
+				// if(beatClock[2] == 0)
+				// {
+				// 	Debug.Log("attempting parry");
+				// 	controller.attepmtParry();
+				// 	parryCD = parryRefresh;
+				// }
+			}
+			
+
 		}
 
 		// X - Triplet
@@ -49,6 +100,8 @@ public class RhythmInput : MonoBehaviour {
 		if (Keyboard.current.cKey.wasPressedThisFrame) {
 			checkInput("C", now, 3, ref cLockoutUntil);
 		}
+
+		lastBeat = beatClock[0];
 	}
 
 	public bool anyMovementKeyPressed() {
@@ -63,19 +116,21 @@ public class RhythmInput : MonoBehaviour {
             Keyboard.current.rightArrowKey.wasPressedThisFrame;
 	}
 
-	public void checkInput(string inputName, double now, int subdivisionInterval, ref double lockoutUntil) {
+	public bool checkInput(string inputName, double now, int subdivisionInterval, ref double lockoutUntil) {
 		if (now < lockoutUntil) {
 			Debug.Log(inputName + " LOCKOUT! Available at: " + lockoutUntil.ToString());
-			return;
+			return false;
 		}
 
 		// Debug.Log((now - rhythm.songStartDspTime - rhythm.delaySec) / rhythm.beatDuration);
 
 		if (tryGetNearestSubdivision(now, subdivisionInterval, out int subdivisionIndex, out double timingError)) {
-			Debug.Log(inputName + " HIT! Subdivision: " + subdivisionIndex.ToString() + ", Timing error: " + (timingError * 1000).ToString() + " ms");
+			//Debug.Log(inputName + " HIT! Subdivision: " + subdivisionIndex.ToString() + ", Timing error: " + (timingError * 1000).ToString() + " ms");
+			return true;
 		}
 		else {
 			Debug.Log(inputName + " MISSED! Locked out. Timing error: " + (timingError * 1000).ToString() + " ms");
+			return false;
 		}
 	}
 
