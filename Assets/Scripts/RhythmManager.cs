@@ -18,7 +18,7 @@ public class RhythmManager : MonoBehaviour {
 	public double subdivisionDuration => beatDuration / 12;
 	public double songTime => isPlaying ? AudioSettings.dspTime - songStartDspTime : 0.0;
 	public int currentBeat => isPlaying ? Mathf.FloorToInt((float)(songTime / beatDuration)) : -1;
-	public event System.Action<int, double> OnSubdivision;
+	public event System.Action<int, double> onSubdivision;
 
 	private Coroutine scheduler;
 
@@ -72,7 +72,7 @@ public class RhythmManager : MonoBehaviour {
 				continue;
 			}
 
-			OnSubdivision?.Invoke(index, targetTime);
+			onSubdivision?.Invoke(index, targetTime);
 			index++;
 		}
 	}

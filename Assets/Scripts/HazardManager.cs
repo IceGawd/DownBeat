@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class HazardManager : MonoBehaviour {
@@ -6,18 +5,15 @@ public class HazardManager : MonoBehaviour {
 	[SerializeField] public RhythmManager rhythm;
 
 	public void Awake() {
-		if (rhythm == null)
-			rhythm = FindAnyObjectByType<RhythmManager>();
+		rhythm = FindAnyObjectByType<RhythmManager>();
 	}
 
 	public void OnEnable() {
-		if (rhythm != null)
-			rhythm.OnSubdivision += HandleSubdivision;
+		rhythm.onSubdivision += HandleSubdivision;
 	}
 
 	public void OnDisable() {
-		if (rhythm != null)
-			rhythm.OnSubdivision -= HandleSubdivision;
+		rhythm.onSubdivision -= HandleSubdivision;
 	}
 
 	public void HandleSubdivision(int index, double targetTime) {
@@ -25,6 +21,6 @@ public class HazardManager : MonoBehaviour {
 			return;
 		}
 
-		Debug.Log($"Spawn hazard! Beat {index / 12}, " + $"scheduled DSP time: {targetTime:F3}");
+		Debug.Log("Spawn hazard! Beat " + (index / 12).ToString() + " scheduled DSP time: " + targetTime.ToString());
 	}
 }
