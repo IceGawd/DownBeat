@@ -22,6 +22,7 @@ public class GroundHazard : Hazard {
 			return;
 		}
 
-		Destroy(this);
+		Debug.Log("Destroying ground hazard at " + position.x + ", " + position.y + " spawnSubdivision: " + spawnSubdivision);
+		Destroy(gameObject);
 	}
 }

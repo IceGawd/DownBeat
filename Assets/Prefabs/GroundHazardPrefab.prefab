@@ -109,6 +109,6 @@ MonoBehaviour:
   position:
     x: 0
     y: 0
-  spawnSubdivision: 0
+  spawnSubdivision: -1
   warningSubdivisions: 0
   activeSubdivisions: 0

@@ -28,18 +28,17 @@ public class HazardManager : MonoBehaviour {
 		int x = spawnCount % 5;
 		int y = 2;
 
+		spawnCount += 1;
+
 		spawnGroundHazard(x, y);
 
 		Debug.Log("Spawn hazard! Beat " + (index / 12).ToString() + " scheduled DSP time: " + targetTime.ToString());
+
+		// Destroy(this);
 	}
 
 	public void spawnGroundHazard(int x, int y) {
-		Vector3 bottomLeft = grid.GetWorldPos(x, y);
-		Vector3 tileWidth = grid.GetWorldPos(x + 1, y) - bottomLeft;
-		Vector3 tileHeight = grid.GetWorldPos(x, y + 1) - bottomLeft;
-		Vector3 center = bottomLeft + (tileWidth + tileHeight) * 0.5f;
-
-		GameObject hazardObject = Instantiate(groundHazardPrefab, center, Quaternion.identity);
+		GameObject hazardObject = Instantiate(groundHazardPrefab, grid.GetWorldPos(x, y), Quaternion.identity);
 		GroundHazard hazard = hazardObject.GetComponent<GroundHazard>();
 		hazard.initialize(rhythm, x, y);
 		hazardObject.SetActive(true);
