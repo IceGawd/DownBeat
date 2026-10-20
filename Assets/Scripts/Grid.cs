@@ -39,14 +39,24 @@ public class Grid {
 
     public void setTile(int x, int y, GameObject insTile)
     {
-        insTile.transform.position = GetWorldPos(x,y) + new Vector3(tileSize, tileSize) * .5f;
+        insTile.transform.position = GetWorldPos(x,y) + new Vector3(tileSize / 2, tileSize / 2);
         gridArray[x,y] = insTile;
 
     }
 
+    public Vector3 getTileCenterPos(int x, int y){
+        return GetWorldPos(x,y) + new Vector3(tileSize / 2, tileSize / 2);
+    }
+
+    public Vector3 getGridCenter(){
+        return new Vector3(0f, 0f);
+    }
+
     private Vector3 GetWorldPos(int x, int y)
     {
-        return (new Vector3(x,y) + adjustOrigin)* tileSize;
+        return (new Vector3(x,y) + adjustOrigin) * tileSize;
     }
+
+
 
 }

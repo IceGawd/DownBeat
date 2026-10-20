@@ -1,5 +1,7 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Scripting.APIUpdating;
 
 public class PlayerController : MonoBehaviour
@@ -7,12 +9,16 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 10f;
     public float moveDist = 1;
 
-    public Transform movePoint;
+    private int bearing;
+    [SerializeField] SpriteRenderer playerSprite;
+    [SerializeField] Animator playerAnim;
+    [SerializeField] Transform movePoint;
     void Start()
     {
         movePoint.parent = null;
+        bearing = 2;
+        playerAnim.SetInteger("Bearing", 2);
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -21,27 +27,53 @@ public class PlayerController : MonoBehaviour
         {
             transform.GetChild(0).GetComponent<SpriteRenderer>().color += new Color(0f, 0.4f, 0.4f, 0f) * Time.deltaTime;
         }
-        
+        playerAnim.SetBool("Moving", false);
     }
 
 
     public void attemptMove()
     {
+        Keyboard kb = Keyboard.current;
         if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
         {
-            if(Math.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
+            if(kb.wKey.wasPressedThisFrame || kb.upArrowKey.wasPressedThisFrame)
             {
-                movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal") * moveDist, 0f, 0f);
-            }else if(Math.Abs(Input.GetAxisRaw("Vertical")) == 1f)
-            {
-                movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical") * moveDist, 0f);
+                movePoint.position += new Vector3(0f, moveDist, 0f);
+                playerAnim.SetInteger("Bearing", 0);
+                playerAnim.SetBool("Moving", true);
+                bearing = 0;
             }
-
+            if(kb.aKey.wasPressedThisFrame || kb.leftArrowKey.wasPressedThisFrame)
+            {
+                movePoint.position -= new Vector3(moveDist, 0f, 0f);
+                playerAnim.SetInteger("Bearing", 3);
+                playerAnim.SetBool("Moving", true);
+                bearing = 3;
+            }
+            if(kb.sKey.wasPressedThisFrame || kb.downArrowKey.wasPressedThisFrame)
+            {
+                movePoint.position -= new Vector3(0f, moveDist, 0f);
+                playerAnim.SetInteger("Bearing", 2);
+                playerAnim.SetBool("Moving", true);
+                bearing = 2;
+            }
+            if(kb.dKey.wasPressedThisFrame || kb.rightArrowKey.wasPressedThisFrame)
+            {
+                movePoint.position += new Vector3(moveDist, 0f, 0f);
+                playerAnim.SetInteger("Bearing", 1);
+                playerAnim.SetBool("Moving", true);
+                bearing = 1;
+            }
         }
     }
 
     public void attepmtParry()
     {
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f, 1f);
+    }
+
+    public int getBearing()
+    {
+        return bearing;
     }
 }
