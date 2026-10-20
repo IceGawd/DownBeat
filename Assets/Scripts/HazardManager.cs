@@ -32,7 +32,7 @@ public class HazardManager : MonoBehaviour {
 
 		spawnGroundHazard(x, y);
 
-		Debug.Log("Spawn hazard! Beat " + (index / 12).ToString() + " scheduled DSP time: " + targetTime.ToString());
+		// Debug.Log("Spawn hazard! Beat " + (index / 12).ToString() + " scheduled DSP time: " + targetTime.ToString());
 
 		// Destroy(this);
 	}

@@ -19,8 +19,6 @@ public class Grid : MonoBehaviour {
         adjustOrigin = new Vector3((float)-width / 2f, (float)-height / 2f) ;
 
         gridArray = new GameObject[width, height];
-        
-
 
         Debug.Log("width: " + width + ". Height: " + height);
 

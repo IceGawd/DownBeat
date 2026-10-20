@@ -4,7 +4,6 @@ using UnityEngine.Scripting.APIUpdating;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerStateManager psm;
     public float moveSpeed = 10f;
     public float moveDist = 1;
 
