@@ -4,8 +4,8 @@ public class EnemyHazard : Hazard {
 	public int subdivisionsPerTile;
 	public GridPosition targetPosition;
 
-	public void initialize(RhythmManager rhythm, int x, int y, int subdivisionsPerTile, GridPosition initialTarget) {
-		base.initialize(rhythm, x, y);
+	public void initialize(RhythmManager rhythm, int x, int y, float d, int subdivisionsPerTile, GridPosition initialTarget) {
+		base.initialize(rhythm, x, y, d);
 		this.subdivisionsPerTile = subdivisionsPerTile > 0 ? subdivisionsPerTile : 1;
 
 		targetPosition = initialTarget;

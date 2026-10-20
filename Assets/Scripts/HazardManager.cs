@@ -40,7 +40,7 @@ public class HazardManager : MonoBehaviour {
 	public void spawnGroundHazard(int x, int y) {
 		GameObject hazardObject = Instantiate(groundHazardPrefab, grid.GetWorldPos(x, y), Quaternion.identity);
 		GroundHazard hazard = hazardObject.GetComponent<GroundHazard>();
-		hazard.initialize(rhythm, x, y);
+		hazard.initialize(rhythm, x, y, 0.5f);
 		hazardObject.SetActive(true);
 	}
 }

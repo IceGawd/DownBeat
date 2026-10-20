@@ -6,10 +6,12 @@ public abstract class Hazard : MonoBehaviour {
 	public GridPosition position;
 
 	public int spawnSubdivision = -1;
+	public float damage = 1;
 
-	public void initialize(RhythmManager rhythm, int x, int y) {
+	public void initialize(RhythmManager rhythm, int x, int y, float d) {
 		this.rhythm = rhythm;
 		position = new GridPosition(x, y);
+		damage = d;
 	}
 
 	public void Awake() {
