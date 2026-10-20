@@ -12,7 +12,7 @@ public class PlayerStateManager : MonoBehaviour
 
     void Start()
     {
-
+        
     }
 
     void Update()

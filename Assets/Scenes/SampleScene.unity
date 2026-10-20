@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 24093460}
   - component: {fileID: 24093459}
   - component: {fileID: 24093461}
+  - component: {fileID: 24093462}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -151,6 +152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 20
   moveDist: 2
+  playerSprite: {fileID: 1984275731}
+  playerAnim: {fileID: 24093462}
   movePoint: {fileID: 1311805399}
 --- !u!4 &24093460
 Transform:
@@ -187,6 +190,28 @@ MonoBehaviour:
   position:
     x: 0
     y: 0
+--- !u!95 &24093462
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24093457}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b4ff97d19e1b7fa478047c5ef7af618b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &113042660
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,7 +916,7 @@ MonoBehaviour:
   musicSource: {fileID: 1255515129}
   song: {fileID: 8300000, guid: fad52ed013e08eb4390842ba19843f22, type: 3}
   bpm: 57
-  delaySec: 0.18
+  delaySec: 0.45
   startDelay: 1
   songStartDspTime: 0
   isPlaying: 0

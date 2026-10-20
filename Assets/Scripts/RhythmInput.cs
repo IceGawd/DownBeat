@@ -39,7 +39,6 @@ public class RhythmInput : MonoBehaviour {
 		
 		beatClock = rhythm.getBeatClock();
 
-
 		// WASD / Arrows : Movement - Half Note
 		if (anyMovementKeyPressed()) {
 			if(checkInput("Movement", now, 12, ref moveLockoutUntil))
@@ -122,7 +121,7 @@ public class RhythmInput : MonoBehaviour {
 			return false;
 		}
 
-		// Debug.Log((now - rhythm.songStartDspTime - rhythm.delaySec) / rhythm.beatDuration);
+		Debug.Log((now - rhythm.songStartDspTime - rhythm.delaySec) / rhythm.beatDuration);
 
 		if (tryGetNearestSubdivision(now, subdivisionInterval, out int subdivisionIndex, out double timingError)) {
 			//Debug.Log(inputName + " HIT! Subdivision: " + subdivisionIndex.ToString() + ", Timing error: " + (timingError * 1000).ToString() + " ms");
@@ -141,7 +140,7 @@ public class RhythmInput : MonoBehaviour {
 		double elapsed = now - rhythm.songStartDspTime - rhythm.delaySec;
 		int approximateIndex = Mathf.RoundToInt((float) (elapsed / rhythm.subdivisionDuration));
 
-		for (int offset = -1; offset <= 1; offset++) {
+		for (int offset = -6; offset <= 6; offset++) {
 			int index = approximateIndex + offset;
 
 			if (index < 0 || index % subdivisionInterval != 0) {

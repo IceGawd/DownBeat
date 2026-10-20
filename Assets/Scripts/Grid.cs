@@ -59,4 +59,8 @@ public class Grid : MonoBehaviour {
     {
         return GetWorldPos(gp.x, gp.y);
     }
+
+    public bool inGrid(GridPosition gp) {
+        return System.Math.Abs(gp.x) <= width / 2 && System.Math.Abs(gp.y) <= height / 2;
+    }
 }
