@@ -3,13 +3,13 @@ using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Grid {
-    private int width;
-    private int height;
-    private float tileSize;
-    private Vector3 adjustOrigin;
-    private GameObject[,] gridArray;
-    private Vector3 tileCenterOffset;
+public class Grid : MonoBehaviour {
+    public int width;
+    public int height;
+    public float tileSize;
+    public Vector3 adjustOrigin;
+    public GameObject[,] gridArray;
+    public Vector3 tileCenterOffset;
     public Grid(int width, int height, float tileSize)
     {
         this.width = width;
@@ -44,9 +44,13 @@ public class Grid {
 
     }
 
-    private Vector3 GetWorldPos(int x, int y)
+    public Vector3 GetWorldPos(int x, int y)
     {
         return (new Vector3(x,y) + adjustOrigin)* tileSize;
     }
 
+    public Vector3 GetWorldPos(GridPosition gp)
+    {
+        return GetWorldPos(gp.x, gp.y);
+    }
 }

@@ -5,7 +5,9 @@ public class BulletHazard : Hazard {
 	public int dy;
 	public int subdivisionsPerTile;
 
-	public BulletHazard(RhythmManager rhythm, int x, int y, int dx, int dy, int subdivisionsPerTile): base(rhythm, x, y) {
+	public void initialize(RhythmManager rhythm, int x, int y, int dx, int dy, int subdivisionsPerTile) {
+		base.initialize(rhythm, x, y);
+
 		this.dx = dx;
 		this.dy = dy;
 		this.subdivisionsPerTile = subdivisionsPerTile;

@@ -7,12 +7,13 @@ public abstract class Hazard : MonoBehaviour {
 
 	public int spawnSubdivision = -1;
 
-	public Hazard(RhythmManager rhythm, int x, int y) {
+	public void initialize(RhythmManager rhythm, int x, int y) {
 		this.rhythm = rhythm;
 		position = new GridPosition(x, y);
 	}
 
 	public void Awake() {
+		rhythm = FindAnyObjectByType<RhythmManager>();
 		rhythm.onSubdivision += handleSubdivision;
 	}
 
