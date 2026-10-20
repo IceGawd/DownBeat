@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
             transform.GetChild(0).GetComponent<SpriteRenderer>().color += new Color(0f, 0.4f, 0.4f, 0f) * Time.deltaTime;
         }
         playerAnim.SetBool("Moving", false);
+        playerAnim.SetBool("Parrying", false);
     }
 
 
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
     public void attepmtParry()
     {
-        transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f, 1f);
+        playerAnim.SetBool("Parrying", true);
     }
 
     public int getBearing()
