@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] GameObject exitPanel;
     [SerializeField] GameObject goodbyePanel;
-    [SerializeField] float goodbyeDuration = 2f;
+    [SerializeField] TMP_Text goodbyeText;
+    [SerializeField] float typeSpeed = 0.1f;      // seconds per letter
+    [SerializeField] float pauseAfterTyping = 1f; // wait before quitting
 
     void Start()
     {
@@ -29,12 +32,21 @@ public class MenuManager : MonoBehaviour
         exitPanel.SetActive(false);
         goodbyePanel.SetActive(true);
         goodbyePanel.transform.SetAsLastSibling();
-        StartCoroutine(QuitAfterDelay());
+        StartCoroutine(TypeThenQuit());
     }
 
-    IEnumerator QuitAfterDelay()
+    IEnumerator TypeThenQuit()
     {
-        yield return new WaitForSecondsRealtime(goodbyeDuration);
+        goodbyeText.text = "GOODBYE :(";
+        goodbyeText.maxVisibleCharacters = 0;
+
+        for (int i = 1; i <= goodbyeText.text.Length; i++)
+        {
+            goodbyeText.maxVisibleCharacters = i;
+            yield return new WaitForSecondsRealtime(typeSpeed);
+        }
+
+        yield return new WaitForSecondsRealtime(pauseAfterTyping);
 
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
