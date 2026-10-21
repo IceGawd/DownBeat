@@ -14,12 +14,14 @@ public class GroundHazard : Hazard {
 
 	public override void onSubdivision(int elapsedSubdivisions, double targetTime) {
 		if (elapsedSubdivisions < warningSubdivisions) {
-			// Warning phase.
+			// Warning
+			hazardAnim.SetBool("isActive", false);
 			return;
 		}
 
 		if (elapsedSubdivisions < warningSubdivisions + activeSubdivisions) {
-			// Active phase.
+			// Active
+			hazardAnim.SetBool("isActive", true);
 			hitPlayer(elapsedSubdivisions);
 			return;
 		}

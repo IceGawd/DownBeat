@@ -5,10 +5,10 @@ public abstract class Hazard : MonoBehaviour {
 	public RhythmManager rhythm;
 	public Grid grid;
 	public GridPosition position;
-	public float damage = 1f;
-	public int spawnSubdivision;
-
+	public int spawnSubdivision = -1;
+	public float damage = 1;
 	public bool initialized;
+	[SerializeField] protected Animator hazardAnim;
 
 	public virtual void initialize(RhythmManager rhythm, int x, int y, float damage) {
 		initialize(rhythm, FindAnyObjectByType<Grid>(), x, y, damage, Mathf.FloorToInt((float)(rhythm.songTime / rhythm.subdivisionDuration)));
