@@ -15,6 +15,9 @@ public class RhythmManager : MonoBehaviour {
 	public double songStartDspTime;
 	public bool isPlaying;
 
+	public double songLength => song != null ? song.length : 0.0;
+	public double songProgress => songLength > 0.0 ? System.Math.Clamp(songTime / songLength, 0.0, 1.0) : 0.0;
+
 	public double beatDuration => 60.0 / bpm;
 	public double subdivisionDuration => beatDuration / 12;
 	public double songTime => isPlaying ? AudioSettings.dspTime - songStartDspTime : 0.0;

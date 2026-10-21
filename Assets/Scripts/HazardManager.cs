@@ -6,8 +6,6 @@ public class HazardManager : MonoBehaviour {
 	[SerializeField] public GameObject groundHazardPrefab;
 	public Grid grid;
 
-	public int spawnCount = 0;
-
 	public void Awake() {
 		rhythm = FindAnyObjectByType<RhythmManager>();
 	}

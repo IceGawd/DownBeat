@@ -7,12 +7,8 @@ public class RhythmInput : MonoBehaviour {
 	[SerializeField] public PlayerController controller;
 
 	[Header("Timing")]
-	[SerializeField] public double toleranceFrames = 4.0;	// 0-1 = Perfect, 2 = Great, 3 = Good, 4 = Ok
-	[SerializeField] public double lockoutFrames = 20.0;
-	[SerializeField] public double FPS = 60.0;
-
-	public double tolerance => toleranceFrames / FPS;
-	public double lockoutDuration => lockoutFrames / FPS;
+	[SerializeField] public double tolerance = 0.2;
+	[SerializeField] public double lockoutDuration = 0.3;
 
 	// The earliest DSP time at which each button can be used again.
 	public double moveLockoutUntil;
