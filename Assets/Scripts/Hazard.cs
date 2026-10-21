@@ -1,38 +1,75 @@
 using UnityEngine;
-using System;
 
 public abstract class Hazard : MonoBehaviour {
+	[Header("Hazard State")]
 	public RhythmManager rhythm;
+	public Grid grid;
 	public GridPosition position;
+	public float damage = 1f;
+	public int spawnSubdivision;
 
-	public int spawnSubdivision = -1;
-	public float damage = 1;
+	public bool initialized;
 
-	public void initialize(RhythmManager rhythm, int x, int y, float d) {
-		this.rhythm = rhythm;
-		position = new GridPosition(x, y);
-		damage = d;
+	public virtual void initialize(RhythmManager rhythm, int x, int y, float damage) {
+		initialize(rhythm, FindAnyObjectByType<Grid>(), x, y, damage, Mathf.FloorToInt((float)(rhythm.songTime / rhythm.subdivisionDuration)));
 	}
 
-	public void Awake() {
-		rhythm = FindAnyObjectByType<RhythmManager>();
+	public virtual void initialize(RhythmManager rhythm, Grid grid, int x, int y, float damage, int spawnSubdivision) {
+		if (initialized && this.rhythm != null) {
+			this.rhythm.onSubdivision -= handleSubdivision;
+		}
+
+		this.rhythm = rhythm;
+		this.grid = grid;
+		this.position = new GridPosition(x, y);
+		this.damage = damage;
+		this.spawnSubdivision = spawnSubdivision;
+
+		initialized = true;
+
 		rhythm.onSubdivision += handleSubdivision;
 	}
 
-	public void handleSubdivision(int subdivisionIndex, double targetTime) {
-		if (spawnSubdivision < 0) {
-			spawnSubdivision = subdivisionIndex;
+	public void handleSubdivision(int index, double targetTime) {
+		if (!initialized) {
+			return;
 		}
 
-		int elapsed = subdivisionIndex - spawnSubdivision;
+		int elapsedSubdivisions = index - spawnSubdivision;
 
-		onSubdivision(elapsed, targetTime);
+		if (elapsedSubdivisions < 0) {
+			return;
+		}
+
+		onSubdivision(elapsedSubdivisions, targetTime);
 	}
 
-	// Hazard specific for override
+	public bool hitPlayer(int elapsedSubdivisions) {
+		PlayerController player = FindAnyObjectByType<PlayerController>();
+		PlayerStateManager playerState = FindAnyObjectByType<PlayerStateManager>();
+
+		if (player == null || playerState == null) {
+			return false;
+		}
+
+		if (!position.equals(player.position)) {
+			return false;
+		}
+
+		playerState.tryTakeDamage(damage, elapsedSubdivisions);
+
+		return true;
+	}
+
+	public void destroyHazard() {
+		Destroy(gameObject);
+	}
+
+	public virtual void OnDestroy() {
+		if (rhythm != null) {
+			rhythm.onSubdivision -= handleSubdivision;
+		}
+	}
+
 	public abstract void onSubdivision(int elapsedSubdivisions, double targetTime);
-
-	public void OnDestroy() {
-		rhythm.onSubdivision -= handleSubdivision;
-	}
 }

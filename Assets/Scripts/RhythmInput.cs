@@ -117,6 +117,7 @@ public class RhythmInput : MonoBehaviour {
 	public bool checkInput(string inputName, double now, int subdivisionInterval, ref double lockoutUntil) {
 		if (now < lockoutUntil) {
 			Debug.Log(inputName + " LOCKOUT! Available at: " + lockoutUntil.ToString());
+			lockoutUntil = now + lockoutDuration * subdivisionInterval / 12;
 			return false;
 		}
 

@@ -246,8 +246,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HazardManager
   rhythm: {fileID: 1255515131}
-  groundHazardPrefab: {fileID: 1941492319676461929, guid: c397fae2af021ec2e911ee152dacbb47, type: 3}
   grid: {fileID: 1706284356}
+  jawPrefab: {fileID: 1941492319676461929, guid: c397fae2af021ec2e911ee152dacbb47, type: 3}
+  thornPrefab: {fileID: 1941492319676461929, guid: c397fae2af021ec2e911ee152dacbb47, type: 3}
+  slowBulletPrefab: {fileID: 1941492319676461929, guid: c397fae2af021ec2e911ee152dacbb47, type: 3}
+  fastBulletPrefab: {fileID: 1941492319676461929, guid: c397fae2af021ec2e911ee152dacbb47, type: 3}
+  jawDamage: 1
+  thornDamage: 0.5
+  slowBulletDamage: 2.5
+  fastBulletDamage: 1.5
+  slowBulletSubdivisionsPerTile: 12
+  fastBulletSubdivisionsPerTile: 6
+  groundWarningSubdivisions: 24
+  groundActiveSubdivisions: 3
+  subdivisionsPerSpawn: 12
+  hazardsPerSpawn: 1
+  nextStageIndex: 0
+  currentStage: -1
   spawnCount: 0
 --- !u!4 &113042662
 Transform:

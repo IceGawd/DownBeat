@@ -60,7 +60,11 @@ public class Grid : MonoBehaviour {
         return GetWorldPos(gp.x, gp.y);
     }
 
+    public bool inGrid(int x, int y) {
+        return System.Math.Abs(x) <= width / 2 && System.Math.Abs(y) <= height / 2;
+    }
+
     public bool inGrid(GridPosition gp) {
-        return System.Math.Abs(gp.x) <= width / 2 && System.Math.Abs(gp.y) <= height / 2;
+        return inGrid(gp.x, gp.y);
     }
 }

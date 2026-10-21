@@ -106,9 +106,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundHazard
   rhythm: {fileID: 0}
+  grid: {fileID: 0}
   position:
     x: 0
     y: 0
+  damage: 1
   spawnSubdivision: -1
-  warningSubdivisions: 0
-  activeSubdivisions: 0
+  initialized: 0
+  warningSubdivisions: 24
+  activeSubdivisions: 12

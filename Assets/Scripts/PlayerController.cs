@@ -20,7 +20,9 @@ public class PlayerController : MonoBehaviour
 		movePoint.parent = null;
 		bearing = 2;
 		playerAnim.SetInteger("Bearing", 2);
+		transform.position = grid.GetWorldPos(position.x, position.y);
 	}
+
 	// Update is called once per frame
 	void Update() {
 		transform.position = (transform.position + movePoint.position) / 2;

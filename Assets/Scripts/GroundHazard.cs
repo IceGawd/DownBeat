@@ -1,38 +1,29 @@
 using UnityEngine;
 
 public class GroundHazard : Hazard {
-	public int warningSubdivisions;
-	public int activeSubdivisions;
+	[Header("Timing")]
+	public int warningSubdivisions = 24;
+	public int activeSubdivisions = 3;
 
-	public void initialize(RhythmManager rhythm, int x, int y, float d) {
-		base.initialize(rhythm, x, y, d);
+	public void initialize(RhythmManager rhythm, int x, int y, float damage, int warning = 24, int active = 3) {
+		base.initialize(rhythm, x, y, damage);
 
-		warningSubdivisions = 24;
-		activeSubdivisions = 3;
+		warningSubdivisions = warning;
+		activeSubdivisions = active;
 	}
 
 	public override void onSubdivision(int elapsedSubdivisions, double targetTime) {
 		if (elapsedSubdivisions < warningSubdivisions) {
-			// Warning
+			// Warning phase.
 			return;
 		}
 
 		if (elapsedSubdivisions < warningSubdivisions + activeSubdivisions) {
-			// Active
-
-			PlayerController player = FindAnyObjectByType<PlayerController>();
-			PlayerStateManager playerState = FindAnyObjectByType<PlayerStateManager>();
-
-			if (player != null && playerState != null) {
-				if (position.equals(player.position)) {
-					int currentSubdivision = spawnSubdivision + elapsedSubdivisions;
-					playerState.tryTakeDamage(damage, currentSubdivision);
-				}
-			}
+			// Active phase.
+			hitPlayer(elapsedSubdivisions);
 			return;
 		}
 
-		// Debug.Log("Destroying ground hazard at " + position.x + ", " + position.y + " spawnSubdivision: " + spawnSubdivision);
-		Destroy(gameObject);
+		destroyHazard();
 	}
 }
