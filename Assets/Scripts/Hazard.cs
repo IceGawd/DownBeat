@@ -5,6 +5,8 @@ public abstract class Hazard : MonoBehaviour {
 	public RhythmManager rhythm;
 	public GridPosition position;
 
+	[SerializeField] protected Animator hazardAnim;
+
 	public int spawnSubdivision = -1;
 	public float damage = 1;
 
