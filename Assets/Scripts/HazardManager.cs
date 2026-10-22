@@ -160,6 +160,7 @@ public class HazardManager : MonoBehaviour {
 
 	public void spawnGroundHazard(GameObject prefab, int x, int y, float damage, int index) {
 		GameObject hazardObject = Instantiate(prefab, grid.GetWorldPos(x, y), Quaternion.identity);
+		hazardObject.transform.parent = transform;
 		GroundHazard hazard = hazardObject.GetComponent<GroundHazard>();
 
 		if (hazard == null) {

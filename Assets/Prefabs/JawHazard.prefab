@@ -107,13 +107,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundHazard
   rhythm: {fileID: 0}
+  grid: {fileID: 0}
   position:
     x: 0
     y: 0
-  hazardAnim: {fileID: 4484655111295495864}
-  hazardSprite: {fileID: 0}
   spawnSubdivision: -1
   damage: 1
+  initialized: 0
+  hazardAnim: {fileID: 4484655111295495864}
   warningSubdivisions: 0
   activeSubdivisions: 0
 --- !u!95 &4484655111295495864

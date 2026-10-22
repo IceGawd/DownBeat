@@ -18,7 +18,7 @@ public class BulletHazard : Hazard
 		this.subdivisionsPerTile = subdivisionsPerTile;
 
 		hasMoved = false;
-		hazardAnim.SetBool("isActive", false);
+		//hazardAnim.SetBool("isActive", false);
 	}
 
 	public override void onSubdivision(int index, int elapsedSubdivisions, double targetTime) {
