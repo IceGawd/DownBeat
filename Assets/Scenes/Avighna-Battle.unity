@@ -247,6 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HazardManager
   rhythm: {fileID: 1255515131}
   grid: {fileID: 1706284356}
+  player: {fileID: 24093459}
   jawPrefab: {fileID: 2835449127810206782, guid: 4fd67e956e5fdc842a1ed067c8f8014a, type: 3}
   thornPrefab: {fileID: 2349131371540643212, guid: 86e2a03a01e720a40bfb0323ebe74d02, type: 3}
   slowBulletPrefab: {fileID: 4439977463411714953, guid: 6963aadbcd4fc3d41a2f98681e680d08, type: 3}
