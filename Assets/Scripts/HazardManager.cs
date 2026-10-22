@@ -4,6 +4,7 @@ public class HazardManager : MonoBehaviour {
 	[Header("References")]
 	[SerializeField] public RhythmManager rhythm;
 	[SerializeField] public Grid grid;
+	[SerializeField] public PlayerController player;
 
 	[Header("Ground Hazard Prefabs")]
 	[SerializeField] public GameObject jawPrefab;
@@ -45,13 +46,12 @@ public class HazardManager : MonoBehaviour {
 
 	public void handleSubdivision(int index, double targetTime) {
 		// Process progression milestones
-		double progress = rhythm.songProgress;
 		bool stageChanged = false;
 
-		while (nextStageIndex < 10 && progress >= nextStageIndex / 10.0) {
+		while (nextStageIndex < 10 && rhythm.songProgress >= nextStageIndex / 10.0) {
 			currentStage = nextStageIndex;
 
-			Debug.Log("Hazard stage " + nextStageIndex + " unlocked at " + (progress * 100.0).ToString() + "% song progress.");
+			Debug.Log("Hazard stage " + nextStageIndex + " unlocked at " + (rhythm.songProgress * 100.0).ToString() + "% song progress.");
 
 			spawnStageHazards(nextStageIndex, index);
 			nextStageIndex++;
@@ -67,11 +67,37 @@ public class HazardManager : MonoBehaviour {
 		}
 	}
 
+	public int getRandomCoordinate(int min, int max, int playerCoordinate) {
+		int maxDistance = Mathf.Max(Mathf.Abs(min - playerCoordinate), Mathf.Abs(max - playerCoordinate));
+
+		float totalWeight = 0f;
+
+		for (int coordinate = min; coordinate <= max; coordinate++) {
+			int distance = Mathf.Abs(coordinate - playerCoordinate);
+			totalWeight += 1f + (float)rhythm.songProgress * (maxDistance - distance);
+		}
+
+		float randomValue = Random.value * totalWeight;
+
+		for (int coordinate = min; coordinate <= max; coordinate++) {
+			int distance = Mathf.Abs(coordinate - playerCoordinate);
+			float weight = 1f + (float)rhythm.songProgress * (maxDistance - distance);
+
+			randomValue -= weight;
+
+			if (randomValue < 0f) {
+				return coordinate;
+			}
+		}
+
+		return max;
+	}
+
 	public void spawnStageHazards(int stage, int index) {
 		switch (stage) {
 			case 0:
 				// 1x1 jaw ground (1)
-				spawnGroundHazard(jawPrefab, Random.Range(-(grid.width / 2), grid.width / 2 + 1), Random.Range(-(grid.height / 2), grid.height / 2 + 1), jawDamage, index);
+				spawnJawSquare(1, index);
 				break;
 
 			case 1:
@@ -96,7 +122,14 @@ public class HazardManager : MonoBehaviour {
 
 			case 5:
 				// Start spawning two random unlocked hazards every 12 subdivisions from now on
-				hazardsPerSpawn = 2;
+				if (hazardsPerSpawn != 2) {
+					hazardsPerSpawn = 2;
+				}
+				else {
+					// ... unless it already exists, in which case spawn an extra (recursion hazard but idgaf lol)
+					spawnRandomUnlockedHazard(index);
+					spawnRandomUnlockedHazard(index);
+				}
 				break;
 
 			case 6:
@@ -126,10 +159,6 @@ public class HazardManager : MonoBehaviour {
 	}
 
 	public void spawnGroundHazard(GameObject prefab, int x, int y, float damage, int index) {
-		if (x < -(grid.width / 2) || x > grid.width / 2 || y < -(grid.height / 2) || y > grid.height / 2) {
-			return;
-		}
-
 		GameObject hazardObject = Instantiate(prefab, grid.GetWorldPos(x, y), Quaternion.identity);
 		GroundHazard hazard = hazardObject.GetComponent<GroundHazard>();
 
@@ -139,22 +168,18 @@ public class HazardManager : MonoBehaviour {
 		}
 
 		hazard.initialize(rhythm, x, y, damage, groundWarningSubdivisions, groundActiveSubdivisions);
-
-		// Use the exact subdivision that spawned this hazard
 		hazard.spawnSubdivision = index;
-
 		spawnCount++;
 	}
 
 	public void spawnJawSquare(int size, int index) {
-		if (size <= 0 || size > grid.width || size > grid.height)
-			return;
-
 		int minX = -(grid.width / 2);
 		int minY = -(grid.height / 2);
+		int maxX = minX + grid.width - size;
+		int maxY = minY + grid.height - size;
 
-		int startX = Random.Range(minX, minX + grid.width - size + 1);
-		int startY = Random.Range(minY, minY + grid.height - size + 1);
+		int startX = getRandomCoordinate(minX, maxX, player.position.x - (size - 1) / 2);
+		int startY = getRandomCoordinate(minY, maxY, player.position.y - (size - 1) / 2);
 
 		for (int x = startX; x < startX + size; x++) {
 			for (int y = startY; y < startY + size; y++) {
@@ -167,14 +192,14 @@ public class HazardManager : MonoBehaviour {
 		bool isColumn = Random.Range(0, 2) == 0;
 
 		if (isColumn) {
-			int x = Random.Range(-(grid.width / 2), grid.width / 2 + 1);
+			int x = getRandomCoordinate(-(grid.width / 2), grid.width / 2, player.position.x);
 
 			for (int y = -(grid.height / 2); y <= grid.height / 2; y++) {
 				spawnGroundHazard(thornPrefab, x, y, thornDamage, index);
 			}
 		}
 		else {
-			int y = Random.Range(-(grid.height / 2), grid.height / 2 + 1);
+			int y = getRandomCoordinate(-(grid.height / 2), grid.height / 2, player.position.y);
 
 			for (int x = -(grid.width / 2); x <= grid.width / 2; x++) {
 				spawnGroundHazard(thornPrefab, x, y, thornDamage, index);
@@ -183,8 +208,8 @@ public class HazardManager : MonoBehaviour {
 	}
 
 	public void spawnThornCross(int index) {
-		int row = Random.Range(-(grid.height / 2), grid.height / 2 + 1);
-		int column = Random.Range(-(grid.width / 2), grid.width / 2 + 1);
+		int row = getRandomCoordinate(-(grid.height / 2), grid.height / 2, player.position.y);
+		int column = getRandomCoordinate(-(grid.width / 2), grid.width / 2, player.position.x);
 
 		for (int x = -(grid.width / 2); x <= grid.width / 2; x++) {
 			spawnGroundHazard(thornPrefab, x, row, thornDamage, index);
@@ -212,27 +237,27 @@ public class HazardManager : MonoBehaviour {
 		switch (edge) {
 			case 0: // Left
 				x = -(grid.width / 2) - 1;
-				y = Random.Range(-(grid.height / 2), grid.height / 2 + 1);
+				y = getRandomCoordinate(-(grid.height / 2), grid.height / 2, player.position.y);
 				dx = 1;
 				dy = 0;
 				break;
 
 			case 1: // Right
 				x = grid.width / 2 + 1;
-				y = Random.Range(-(grid.height / 2), grid.height / 2 + 1);
+				y = getRandomCoordinate(-(grid.height / 2), grid.height / 2, player.position.y);
 				dx = -1;
 				dy = 0;
 				break;
 
 			case 2: // Down
-				x = Random.Range(-(grid.width / 2), grid.width / 2 + 1);
+				x = getRandomCoordinate(-(grid.width / 2), grid.width / 2, player.position.x);
 				y = -(grid.height / 2) - 1;
 				dx = 0;
 				dy = 1;
 				break;
 
 			default: // Up
-				x = Random.Range(-(grid.width / 2), grid.width / 2 + 1);
+				x = getRandomCoordinate(-(grid.width / 2), grid.width / 2, player.position.x);
 				y = grid.height / 2 + 1;
 				dx = 0;
 				dy = -1;
@@ -259,9 +284,25 @@ public class HazardManager : MonoBehaviour {
 			return;
 		}
 
-		// Randomly choose from all stages unlocked so far
-		int stage = Random.Range(0, currentStage + 1);
+		float totalWeight = 0f;
 
-		spawnStageHazards(stage, index);
+		for (int stage = 0; stage <= currentStage; stage++) {
+			totalWeight += 1f + (float)rhythm.songProgress * stage;
+		}
+
+		float randomValue = Random.value * totalWeight;
+
+		for (int stage = 0; stage <= currentStage; stage++) {
+			float weight = 1f + (float)rhythm.songProgress * stage;
+
+			randomValue -= weight;
+
+			if (randomValue < 0f) {
+				spawnStageHazards(stage, index);
+				return;
+			}
+		}
+
+		spawnStageHazards(currentStage, index);
 	}
 }
