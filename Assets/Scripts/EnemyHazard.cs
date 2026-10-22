@@ -11,7 +11,7 @@ public class EnemyHazard : Hazard {
 		targetPosition = initialTarget;
 	}
 
-	public override void onSubdivision(int elapsedSubdivisions, double targetTime) {
+	public override void onSubdivision(int index, int elapsedSubdivisions, double targetTime) {
 		if (elapsedSubdivisions == 0) {
 			return;
 		}

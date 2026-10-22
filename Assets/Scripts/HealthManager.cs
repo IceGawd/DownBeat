@@ -31,6 +31,8 @@ public class HealthManager : MonoBehaviour {
 			return;
 		}
 
+		Debug.Log("taking damage!");
+
 		// I dont want it to try and draw negative hearts
 		currentHealth = Mathf.Clamp(currentHealth - amount, 0f, maxHealth);
 

@@ -5,10 +5,10 @@ public abstract class Hazard : MonoBehaviour {
 	public RhythmManager rhythm;
 	public Grid grid;
 	public GridPosition position;
-	public float damage = 1f;
-	public int spawnSubdivision;
-
+	public int spawnSubdivision = -1;
+	public float damage = 1;
 	public bool initialized;
+	[SerializeField] protected Animator hazardAnim;
 
 	public virtual void initialize(RhythmManager rhythm, int x, int y, float damage) {
 		initialize(rhythm, FindAnyObjectByType<Grid>(), x, y, damage, Mathf.FloorToInt((float)(rhythm.songTime / rhythm.subdivisionDuration)));
@@ -41,10 +41,10 @@ public abstract class Hazard : MonoBehaviour {
 			return;
 		}
 
-		onSubdivision(elapsedSubdivisions, targetTime);
+		onSubdivision(index, elapsedSubdivisions, targetTime);
 	}
 
-	public bool hitPlayer(int elapsedSubdivisions) {
+	public bool hitPlayer(int index) {
 		PlayerController player = FindAnyObjectByType<PlayerController>();
 		PlayerStateManager playerState = FindAnyObjectByType<PlayerStateManager>();
 
@@ -56,7 +56,7 @@ public abstract class Hazard : MonoBehaviour {
 			return false;
 		}
 
-		playerState.tryTakeDamage(damage, elapsedSubdivisions);
+		playerState.tryTakeDamage(damage, index);
 
 		return true;
 	}
@@ -71,5 +71,5 @@ public abstract class Hazard : MonoBehaviour {
 		}
 	}
 
-	public abstract void onSubdivision(int elapsedSubdivisions, double targetTime);
+	public abstract void onSubdivision(int index, int elapsedSubdivisions, double targetTime);
 }

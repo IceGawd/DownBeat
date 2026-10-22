@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
 	public GridPosition position = new GridPosition(0, 0);
 
 	private int bearing;
-	[SerializeField] SpriteRenderer playerSprite;
 	[SerializeField] Animator playerAnim;
 	[SerializeField] Transform movePoint;
 	[SerializeField] Grid grid;
