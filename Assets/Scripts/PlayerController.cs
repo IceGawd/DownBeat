@@ -96,7 +96,11 @@ public class PlayerController : MonoBehaviour
 	}
 
 	public void attepmtParry() {
-		// playerAnim.SetBool("Parrying", true);
+		playerAnim.SetBool("Parrying", true);
+
+		RhythmManager rhythmManager = FindAnyObjectByType<RhythmManager>();
+		PlayerStateManager playerState = FindAnyObjectByType<PlayerStateManager>();
+		playerState.parryUntil = rhythmManager.index + playerState.parry;
 	}
 
 	public int getBearing() {

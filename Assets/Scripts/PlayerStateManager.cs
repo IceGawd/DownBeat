@@ -5,7 +5,10 @@ public class PlayerStateManager : MonoBehaviour {
 	[SerializeField] public FlowMeter meter;
 	[SerializeField] public HealthManager health;
 	[SerializeField] public GridPosition position;
-	[SerializeField] int invincibility = 12;
+	[SerializeField] public int invincibility = 12;
+	[SerializeField] public int parry = 6;
+
+	public int parryUntil = -1;
 
 	int lastHitSubdivision = -12;
 

@@ -21,8 +21,9 @@ public class RhythmInput : MonoBehaviour {
 	private int parryCD;
 	private int lastBeat;
 	public void Awake() {
-		if (rhythm == null)
+		if (rhythm == null) {
 			rhythm = GetComponent<RhythmManager>();
+		}
 	}
 
 	public void Update() {

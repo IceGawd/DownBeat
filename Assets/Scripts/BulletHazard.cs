@@ -28,14 +28,8 @@ public class BulletHazard : Hazard
 		}
 
 		// The bullet has entered the player's tile.
-		if (hitPlayer(index)) {
+		if (hitPlayer(index, true)) {
 			destroyHazard();
-		}
-		
-		// The bullet has left the grid.
-		if (!grid.inGrid(position)) {
-			destroyHazard();
-			return;
 		}
 
 		if (elapsedSubdivisions % subdivisionsPerTile != 0) {
@@ -47,8 +41,14 @@ public class BulletHazard : Hazard
 		transform.position = grid.GetWorldPos(position.x, position.y);
 		hazardAnim.SetBool("isActive", true);
 
+		// The bullet has left the grid.
+		if (!grid.inGrid(position)) {
+			destroyHazard();
+			return;
+		}
+
 		// The bullet has entered the player's tile.
-		if (hitPlayer(index)) {
+		if (hitPlayer(index, true)) {
 			destroyHazard();
 		}
 	}

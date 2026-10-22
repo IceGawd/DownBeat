@@ -194,7 +194,7 @@ MonoBehaviour:
   position:
     x: 0
     y: 0
-  invincibility: 12
+  invincibility: 19
 --- !u!95 &24093462
 Animator:
   serializedVersion: 7
@@ -794,57 +794,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &638053156
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 638053158}
-  - component: {fileID: 638053157}
-  m_Layer: 0
-  m_Name: PlayerStateManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &638053157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 638053156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4d7b1aaaf178d44eac82b6ecdc9a4be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerStateManager
-  rhythm: {fileID: 1255515131}
-  meter: {fileID: 242366116}
-  health: {fileID: 468462967}
-  position:
-    x: 0
-    y: 0
-  invincibility: 12
---- !u!4 &638053158
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 638053156}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.15333, y: -0.56334, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &831579402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,7 +1088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   musicSource: {fileID: 1255515129}
-  song: {fileID: 8300000, guid: 53007900182cd3c4f93a7137b30260ff, type: 3}
+  song: {fileID: 8300000, guid: 570aa76ea140b1cf993e9367d390b2a5, type: 3}
   bpm: 90
   delaySec: 0.05
   startDelay: 1
@@ -4013,7 +3962,6 @@ SceneRoots:
   - {fileID: 1255515130}
   - {fileID: 113042662}
   - {fileID: 24093460}
-  - {fileID: 638053158}
   - {fileID: 242366117}
   - {fileID: 468462968}
   - {fileID: 1706284357}

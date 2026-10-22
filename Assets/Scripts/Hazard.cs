@@ -44,7 +44,7 @@ public abstract class Hazard : MonoBehaviour {
 		onSubdivision(index, elapsedSubdivisions, targetTime);
 	}
 
-	public bool hitPlayer(int index) {
+	public bool hitPlayer(int index, bool parryable) {
 		PlayerController player = FindAnyObjectByType<PlayerController>();
 		PlayerStateManager playerState = FindAnyObjectByType<PlayerStateManager>();
 
@@ -54,6 +54,11 @@ public abstract class Hazard : MonoBehaviour {
 
 		if (!position.equals(player.position)) {
 			return false;
+		}
+
+		if (parryable && index < playerState.parryUntil) {
+			Debug.Log("PARRY!");
+			return true;
 		}
 
 		playerState.tryTakeDamage(damage, index);

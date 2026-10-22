@@ -13,6 +13,8 @@ public class RhythmManager : MonoBehaviour {
 	[Header("Scheduling")]
 	[SerializeField] public double startDelay = 1.0;
 
+	public int index = 0;
+
 	public double songStartDspTime;
 	public bool isPlaying;
 
@@ -76,7 +78,7 @@ public class RhythmManager : MonoBehaviour {
 	}
 
 	public IEnumerator SubdivisionScheduler() {
-		int index = 0;
+		index = 0;
 
 		while (true) {
 			if (!isPlaying) {

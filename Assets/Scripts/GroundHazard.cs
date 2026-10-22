@@ -22,7 +22,7 @@ public class GroundHazard : Hazard {
 		if (elapsedSubdivisions < warningSubdivisions + activeSubdivisions) {
 			// Active
 			hazardAnim.SetBool("isActive", true);
-			hitPlayer(index);
+			hitPlayer(index, false);
 			return;
 		}
 
