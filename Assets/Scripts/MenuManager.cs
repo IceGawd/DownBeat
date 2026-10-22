@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
@@ -16,6 +17,11 @@ public class MenuManager : MonoBehaviour
         goodbyePanel.SetActive(false);
     }
 
+    public void PlayGame()
+    {
+        SceneManager.LoadSceneAsync("Jungle");
+    }
+    
     public void OpenExitPanel()
     {
         exitPanel.SetActive(true);
