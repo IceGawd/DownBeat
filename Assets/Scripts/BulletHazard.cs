@@ -8,8 +8,6 @@ public class BulletHazard : Hazard
 	public int warningSubdivisions = 12;
 	public int subdivisionsPerTile = 12;
 
-	public bool hasMoved;
-
 	public void initialize(RhythmManager rhythm, int x, int y, float d, int dx, int dy, int subdivisionsPerTile) {
 		base.initialize(rhythm, x, y, d);
 		
@@ -17,8 +15,7 @@ public class BulletHazard : Hazard
 		this.dy = dy;
 		this.subdivisionsPerTile = subdivisionsPerTile;
 
-		hasMoved = false;
-		//hazardAnim.SetBool("isActive", false);
+		hazardAnim.SetBool("isActive", false);
 	}
 
 	public override void onSubdivision(int index, int elapsedSubdivisions, double targetTime) {
@@ -30,6 +27,17 @@ public class BulletHazard : Hazard
 			return;
 		}
 
+		// The bullet has entered the player's tile.
+		if (hitPlayer(index)) {
+			destroyHazard();
+		}
+		
+		// The bullet has left the grid.
+		if (!grid.inGrid(position)) {
+			destroyHazard();
+			return;
+		}
+
 		if (elapsedSubdivisions % subdivisionsPerTile != 0) {
 			return;
 		}
@@ -38,13 +46,6 @@ public class BulletHazard : Hazard
 		position.move(dx, dy);
 		transform.position = grid.GetWorldPos(position.x, position.y);
 		hazardAnim.SetBool("isActive", true);
-		hasMoved = true;
-
-		// The bullet has left the grid.
-		if (!grid.inGrid(position)) {
-			destroyHazard();
-			return;
-		}
 
 		// The bullet has entered the player's tile.
 		if (hitPlayer(index)) {

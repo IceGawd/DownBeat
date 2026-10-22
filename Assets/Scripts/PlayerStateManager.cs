@@ -5,8 +5,8 @@ public class PlayerStateManager : MonoBehaviour {
 	[SerializeField] public FlowMeter meter;
 	[SerializeField] public HealthManager health;
 	[SerializeField] public GridPosition position;
+	[SerializeField] int invincibility = 12;
 
-	int invincibility = 12;
 	int lastHitSubdivision = -12;
 
 	public bool tryTakeDamage(float amount, int currentSubdivision) {
