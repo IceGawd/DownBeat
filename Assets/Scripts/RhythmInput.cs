@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -121,7 +122,10 @@ public class RhythmInput : MonoBehaviour {
 			return false;
 		}
 
-		lockoutUntil = now + lockoutDuration * subdivisionInterval / 12;
+		moveLockoutUntil = Math.Min(moveLockoutUntil, now + lockoutDuration);
+		zLockoutUntil = Math.Min(zLockoutUntil, now + lockoutDuration / 2);
+		xLockoutUntil = Math.Min(xLockoutUntil, now + lockoutDuration / 3);
+		cLockoutUntil = Math.Min(cLockoutUntil, now + lockoutDuration / 4);
 		// Debug.Log((now - rhythm.songStartDspTime - rhythm.delaySec) / rhythm.beatDuration);
 
 		if (tryGetNearestSubdivision(now, subdivisionInterval, out int subdivisionIndex, out double timingError)) {
