@@ -317,8 +317,8 @@ MonoBehaviour:
   fastBulletDamage: 1.5
   slowBulletSubdivisionsPerTile: 12
   fastBulletSubdivisionsPerTile: 6
-  groundWarningSubdivisions: 48
-  groundActiveSubdivisions: 12
+  groundWarningSubdivisions: 24
+  groundActiveSubdivisions: 18
   subdivisionsPerSpawn: 12
   hazardsPerSpawn: 1
   nextStageIndex: 0
@@ -1312,7 +1312,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 1, z: 10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.09, y: 1.09, z: 1.09}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1661782195}
