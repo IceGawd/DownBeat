@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RhythmManager : MonoBehaviour {
 	[Header("Song")]
@@ -42,6 +43,10 @@ public class RhythmManager : MonoBehaviour {
 		beatClock[2] = currentSubDivision % 6;
 		beatClock[3] = currentSubDivision % 4;
 		beatClock[4] = currentSubDivision % 3;
+		if(songProgress >= 1)
+		{
+			SceneManager.LoadSceneAsync("VictoryScreen");
+		}
 	}
 
 	public void startSong() {
