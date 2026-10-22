@@ -21,7 +21,7 @@ public class BulletHazard : Hazard
 		hazardAnim.SetBool("isActive", false);
 	}
 
-	public override void onSubdivision(int elapsedSubdivisions, double targetTime) {
+	public override void onSubdivision(int index, int elapsedSubdivisions, double targetTime) {
 		if (elapsedSubdivisions <= 0) {
 			return;
 		}
@@ -47,7 +47,7 @@ public class BulletHazard : Hazard
 		}
 
 		// The bullet has entered the player's tile.
-		if (hitPlayer(elapsedSubdivisions)) {
+		if (hitPlayer(index)) {
 			destroyHazard();
 		}
 	}

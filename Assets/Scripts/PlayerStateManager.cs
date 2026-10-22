@@ -15,6 +15,8 @@ public class PlayerStateManager : MonoBehaviour {
 			return false;
 		}
 
+		Debug.Log(currentSubdivision);
+
 		// Reject damage during the invincibility window.
 		if (currentSubdivision < lastHitSubdivision + invincibility) {
 			return false;

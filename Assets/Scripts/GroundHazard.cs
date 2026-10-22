@@ -12,7 +12,7 @@ public class GroundHazard : Hazard {
 		activeSubdivisions = active;
 	}
 
-	public override void onSubdivision(int elapsedSubdivisions, double targetTime) {
+	public override void onSubdivision(int index, int elapsedSubdivisions, double targetTime) {
 		if (elapsedSubdivisions < warningSubdivisions) {
 			// Warning
 			hazardAnim.SetBool("isActive", false);
@@ -22,7 +22,7 @@ public class GroundHazard : Hazard {
 		if (elapsedSubdivisions < warningSubdivisions + activeSubdivisions) {
 			// Active
 			hazardAnim.SetBool("isActive", true);
-			hitPlayer(elapsedSubdivisions);
+			hitPlayer(index);
 			return;
 		}
 

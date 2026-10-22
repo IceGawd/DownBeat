@@ -39,7 +39,7 @@ public class RhythmInput : MonoBehaviour {
 		if (anyMovementKeyPressed()) {
 			if(checkInput("Movement", now, 12, ref moveLockoutUntil))
 			{
-				Debug.Log("attempting movement");
+				// Debug.Log("attempting movement");
 				controller.attemptMove();
 			}
 			// if(beatClock[1] == 0)
@@ -94,7 +94,7 @@ public class RhythmInput : MonoBehaviour {
 		// C - Eighth Note
 		if (Keyboard.current.cKey.wasPressedThisFrame) {
 			if (checkInput("C", now, 3, ref cLockoutUntil)) {
-				Debug.Log("attempting flutterstep");
+				// Debug.Log("attempting flutterstep");
 				controller.attemptMove();
 			}
 		}
@@ -122,7 +122,7 @@ public class RhythmInput : MonoBehaviour {
 		}
 
 		lockoutUntil = now + lockoutDuration * subdivisionInterval / 12;
-		Debug.Log((now - rhythm.songStartDspTime - rhythm.delaySec) / rhythm.beatDuration);
+		// Debug.Log((now - rhythm.songStartDspTime - rhythm.delaySec) / rhythm.beatDuration);
 
 		if (tryGetNearestSubdivision(now, subdivisionInterval, out int subdivisionIndex, out double timingError)) {
 			//Debug.Log(inputName + " HIT! Subdivision: " + subdivisionIndex.ToString() + ", Timing error: " + (timingError * 1000).ToString() + " ms");
