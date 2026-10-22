@@ -15,7 +15,7 @@ public class GroundHazard : Hazard {
 	public override void onSubdivision(int elapsedSubdivisions, double targetTime) {
 		if (elapsedSubdivisions < warningSubdivisions) {
 			// Warning
-			hazardAnim.SetBool("isActive", false);
+			//hazardAnim.SetBool("isActive", false);
 			return;
 		}
 

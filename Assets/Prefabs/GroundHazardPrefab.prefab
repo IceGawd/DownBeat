@@ -100,7 +100,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1941492319676461929}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb12a997e64580047815f4039a9e0f63, type: 3}
   m_Name: 
@@ -110,8 +110,9 @@ MonoBehaviour:
   position:
     x: 0
     y: 0
-  damage: 1
   spawnSubdivision: -1
+  damage: 1
   initialized: 0
+  hazardAnim: {fileID: 0}
   warningSubdivisions: 24
   activeSubdivisions: 12
